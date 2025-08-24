@@ -3,15 +3,23 @@ import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebase
 
 // ====== Firebase config ======
 const firebaseConfig = {
-  "projectId": "studio-status-voswv",
-  "appId": "1:573527092085:web:bcbe9aaa56267c0681813c",
-  "storageBucket": "studio-status-voswv.firebasestorage.app",
-  "apiKey": "AIzaSyDMAKyj1NagvDJDiDT0yFNlQUquNVR3FNg",
-  "authDomain": "studio-status-voswv.firebaseapp.com",
-  "measurementId": "",
-  "messagingSenderId": "573527092085",
-  "databaseURL": "https://studio-status-voswv-default-rtdb.firebaseio.com"
+
+  apiKey: "AIzaSyDMAKyj1NagvDJDiDT0yFNlQUquNVR3FNg",
+
+  authDomain: "studio-status-voswv.firebaseapp.com",
+
+  databaseURL: "https://studio-status-voswv-default-rtdb.firebaseio.com",
+
+  projectId: "studio-status-voswv",
+
+  storageBucket: "studio-status-voswv.firebasestorage.app",
+
+  messagingSenderId: "573527092085",
+
+  appId: "1:573527092085:web:452686c65e9017b881813c"
+
 };
+
 
 
 const app = initializeApp(firebaseConfig);
