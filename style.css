@@ -19,7 +19,7 @@ h1 {
 /* User row - stacked by default for mobile */
 .user-row {
   display: flex;
-  flex-direction: column;  /* mobile-first: vertical */
+  flex-direction: row;  /* mobile-first: vertical */
   align-items: stretch;
   margin-bottom: 1rem;
   width: 100%;
