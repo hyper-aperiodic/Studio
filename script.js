@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebas
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
 // ====== Firebase config ======
-firebaseConfig = {
+const firebaseConfig = {
   "projectId": "studio-status-voswv",
   "appId": "1:573527092085:web:bcbe9aaa56267c0681813c",
   "storageBucket": "studio-status-voswv.firebasestorage.app",
@@ -13,18 +13,21 @@ firebaseConfig = {
   "databaseURL": "https://studio-status-voswv-default-rtdb.firebaseio.com"
 };
 
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // ====== Users & statuses ======
 const users = ["Alice", "Bob", "Clara"]; // Add your group here
 const container = document.getElementById("status-container");
+const userRows = {}; // store divs by user
 
 // Initialize buttons
 users.forEach(user => {
   const div = document.createElement("div");
   div.classList.add("user-row");
   div.innerHTML = `<strong>${user}</strong> `;
+  
   ["Table", "Wheel", "Out"].forEach(status => {
     const btn = document.createElement("button");
     btn.textContent = status;
@@ -32,7 +35,9 @@ users.forEach(user => {
     btn.addEventListener("click", () => updateStatus(user, status));
     div.appendChild(btn);
   });
+  
   container.appendChild(div);
+  userRows[user] = div;
 });
 
 // ====== Update status in Firebase ======
@@ -46,7 +51,7 @@ onValue(statusesRef, (snapshot) => {
   const data = snapshot.val() || {};
   users.forEach(user => {
     const status = data[user];
-    const row = container.querySelector(`div:contains('${user}')`);
+    const row = userRows[user];
     const buttons = row.querySelectorAll("button");
     buttons.forEach(btn => {
       btn.classList.toggle("active", btn.textContent === status);
