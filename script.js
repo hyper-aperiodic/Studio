@@ -41,6 +41,23 @@ users.forEach(user => {
   userRows[user] = div;
 });
 
+function updateLayout() {
+  const isDesktop = window.innerWidth > 500;
+  users.forEach(user => {
+    const row = userRows[user];
+    if (isDesktop) {
+      row.classList.add("desktop");
+    } else {
+      row.classList.remove("desktop");
+    }
+  });
+}
+
+// Initial check
+updateLayout();
+
+// Update on resize
+window.addEventListener("resize", updateLayout);
 
 // ====== Update status in Firebase ======
 function updateStatus(user, status) {
