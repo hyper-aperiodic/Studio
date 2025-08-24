@@ -3,27 +3,22 @@ import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebase
 
 // ====== Firebase config ======
 const firebaseConfig = {
-
   apiKey: "AIzaSyDMAKyj1NagvDJDiDT0yFNlQUquNVR3FNg",
-
   authDomain: "studio-status-voswv.firebaseapp.com",
-
   databaseURL: "https://studio-status-voswv-default-rtdb.firebaseio.com",
-
   projectId: "studio-status-voswv",
-
-  storageBucket: "studio-status-voswv.firebasestorage.app",
-
+  storageBucket: "studio-status-voswv.appspot.com", // ✅ fixed
   messagingSenderId: "573527092085",
-
   appId: "1:573527092085:web:452686c65e9017b881813c"
-
 };
 
-
+console.log("✅ Script loaded");
 
 const app = initializeApp(firebaseConfig);
+console.log("✅ Firebase initialized");
+
 const db = getDatabase(app);
+console.log("✅ Database loaded");
 
 // ====== Users & statuses ======
 const users = ["Alice", "Bob", "Clara"]; // Add your group here
@@ -48,8 +43,11 @@ users.forEach(user => {
   userRows[user] = div;
 });
 
+console.log("✅ Buttons rendered");
+
 // ====== Update status in Firebase ======
 function updateStatus(user, status) {
+  console.log(`⬆️ Updating ${user} to ${status}`);
   set(ref(db, 'statuses/' + user), status);
 }
 
@@ -57,6 +55,8 @@ function updateStatus(user, status) {
 const statusesRef = ref(db, 'statuses');
 onValue(statusesRef, (snapshot) => {
   const data = snapshot.val() || {};
+  console.log("⬇️ Got update from Firebase:", data);
+
   users.forEach(user => {
     const status = data[user];
     const row = userRows[user];
