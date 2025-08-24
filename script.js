@@ -1,46 +1,55 @@
-// Hardcoded people list
-const people = ["Alice", "Bob", "Clara", "Dave"];
-const statuses = ["Out", "Table", "Wheel"];
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
-// Store current states
-const state = {};
-people.forEach(p => state[p] = "Out");
+// ====== Firebase config ======
+firebaseConfig = {
+  "projectId": "studio-status-voswv",
+  "appId": "1:573527092085:web:bcbe9aaa56267c0681813c",
+  "storageBucket": "studio-status-voswv.firebasestorage.app",
+  "apiKey": "AIzaSyDMAKyj1NagvDJDiDT0yFNlQUquNVR3FNg",
+  "authDomain": "studio-status-voswv.firebaseapp.com",
+  "measurementId": "",
+  "messagingSenderId": "573527092085",
+  "databaseURL": "https://studio-status-voswv-default-rtdb.firebaseio.com"
+};
 
-// Render UI
-const container = document.getElementById("people");
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-people.forEach(person => {
-  const row = document.createElement("div");
-  row.className = "person";
+// ====== Users & statuses ======
+const users = ["Alice", "Bob", "Clara"]; // Add your group here
+const container = document.getElementById("status-container");
 
-  const label = document.createElement("div");
-  label.className = "name";
-  label.textContent = person;
-  row.appendChild(label);
-
-  statuses.forEach(status => {
+// Initialize buttons
+users.forEach(user => {
+  const div = document.createElement("div");
+  div.classList.add("user-row");
+  div.innerHTML = `<strong>${user}</strong> `;
+  ["Table", "Wheel", "Out"].forEach(status => {
     const btn = document.createElement("button");
     btn.textContent = status;
-    btn.onclick = () => updateStatus(person, status);
-    btn.id = `${person}-${status}`;
-    row.appendChild(btn);
+    btn.classList.add(status.toLowerCase());
+    btn.addEventListener("click", () => updateStatus(user, status));
+    div.appendChild(btn);
   });
-
-  container.appendChild(row);
+  container.appendChild(div);
 });
 
-// Update state + button styles
-function updateStatus(person, status) {
-  state[person] = status;
-
-  statuses.forEach(s => {
-    const btn = document.getElementById(`${person}-${s}`);
-    if (s === status) {
-      btn.classList.add("active");
-    } else {
-      btn.classList.remove("active");
-    }
-  });
-
-  console.log(state); // For now just logs to console
+// ====== Update status in Firebase ======
+function updateStatus(user, status) {
+  set(ref(db, 'statuses/' + user), status);
 }
+
+// ====== Listen for changes and update buttons ======
+const statusesRef = ref(db, 'statuses');
+onValue(statusesRef, (snapshot) => {
+  const data = snapshot.val() || {};
+  users.forEach(user => {
+    const status = data[user];
+    const row = container.querySelector(`div:contains('${user}')`);
+    const buttons = row.querySelectorAll("button");
+    buttons.forEach(btn => {
+      btn.classList.toggle("active", btn.textContent === status);
+    });
+  });
+});
