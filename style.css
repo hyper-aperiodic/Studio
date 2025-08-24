@@ -39,9 +39,11 @@ button {
   background: #eee;
   cursor: pointer;
   transition: background 0.2s;
-  width: 100%;
-  margin-bottom: 0.3rem;
+  flex: 1;           /* share remaining horizontal space */
+  margin-bottom: 0;  /* remove bottom margin since we use gap */
 }
+
+
 
 button.table.active { background: #a0522d; color: white; }
 button.wheel.active { background: #666; color: white; }
@@ -70,3 +72,20 @@ button.out.active { background: #c0392b; color: white; }
 .user-row.desktop button:last-child {
   margin-right: 0;
 }
+
+.user-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;       /* spacing between buttons */
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+.user-row strong {
+  width: 70px;       /* reserve space for the name */
+  text-align: right;
+}
+
