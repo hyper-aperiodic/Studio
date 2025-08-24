@@ -7,18 +7,16 @@ const firebaseConfig = {
   authDomain: "studio-status-voswv.firebaseapp.com",
   databaseURL: "https://studio-status-voswv-default-rtdb.firebaseio.com",
   projectId: "studio-status-voswv",
-  storageBucket: "studio-status-voswv.appspot.com", // ✅ fixed
+  storageBucket: "studio-status-voswv.appspot.com", 
   messagingSenderId: "573527092085",
   appId: "1:573527092085:web:452686c65e9017b881813c"
 };
 
-console.log("✅ Script loaded");
-
 const app = initializeApp(firebaseConfig);
-console.log("✅ Firebase initialized");
+
 
 const db = getDatabase(app);
-console.log("✅ Database loaded");
+
 
 // ====== Users & statuses ======
 const users = ["Alice", "Bob", "Clara"]; // Add your group here
@@ -43,7 +41,6 @@ users.forEach(user => {
   userRows[user] = div;
 });
 
-console.log("✅ Buttons rendered");
 
 // ====== Update status in Firebase ======
 function updateStatus(user, status) {
