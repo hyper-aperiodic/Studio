@@ -26,6 +26,7 @@ h1 {
   margin-bottom: 1rem;
   width: 100%;
   max-width: 600px;
+  flex-wrap: nowrap;
 }
 
 /* Name */
@@ -38,7 +39,8 @@ h1 {
 
 /* ====== Buttons ====== */
 button {
-  flex: 1;                 /* share remaining row space */
+  flex: 1 1 auto;                 /* share remaining row space */
+  min-width: 0;
   width: auto;             /* override full width */
   margin: 0;               /* handled by gap */
   padding: 0.5rem;
