@@ -1,3 +1,4 @@
+/* ====== Base ====== */
 body {
   font-family: system-ui, sans-serif;
   background: #fafafa;
@@ -16,76 +17,76 @@ h1 {
   margin-bottom: 2rem;
 }
 
-/* User row - stacked by default for mobile */
+/* ====== User Row ====== */
 .user-row {
   display: flex;
-  flex-direction: row;  /* mobile-first: vertical */
-  align-items: stretch;
+  flex-direction: row;      /* horizontal by default */
+  align-items: center;
+  gap: 0.5rem;             /* spacing between buttons */
   margin-bottom: 1rem;
   width: 100%;
   max-width: 600px;
 }
 
+/* Name */
 .user-row strong {
-  text-align: center;
-  margin-bottom: 0.3rem;
+  display: inline-block;
+  width: 70px;             /* fixed space for name */
+  text-align: right;
+  margin-right: 0.5rem;
 }
 
-/* Buttons */
+/* ====== Buttons ====== */
 button {
+  flex: 1;                 /* share remaining row space */
+  width: auto;             /* override full width */
+  margin: 0;               /* handled by gap */
   padding: 0.5rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   background: #eee;
   cursor: pointer;
-  transition: background 0.2s;
-  flex: 1;           /* share remaining horizontal space */
-  margin-bottom: 0;  /* remove bottom margin since we use gap */
+  transition: background 0.2s, color 0.2s;
 }
 
-
-
+/* Active states */
 button.table.active { background: #a0522d; color: white; }
 button.wheel.active { background: #666; color: white; }
 button.out.active { background: #c0392b; color: white; }
 
-/* Desktop layout using a class added by JS */
-.user-row.desktop {
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+/* ====== Desktop layout (optional, for wider screens) ====== */
+@media (min-width: 600px) {
+  .user-row.desktop {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .user-row.desktop strong {
+    width: 80px;
+    text-align: right;
+    margin-right: 0.5rem;
+  }
+
+  .user-row.desktop button {
+    flex: 1;
+  }
 }
 
-.user-row.desktop strong {
-  width: 80px;
-  text-align: right;
-  margin-right: 0.5rem;
-}
+/* ====== Tiny screen fallback ====== */
+@media (max-width: 320px) {
+  .user-row {
+    flex-direction: column; /* stack buttons only on tiny screens */
+    align-items: stretch;
+  }
 
-.user-row.desktop button {
-  flex: 1;
-  width: auto;
-  margin-bottom: 0;
-  margin-right: 0.5rem;
-}
+  .user-row strong {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
 
-.user-row.desktop button:last-child {
-  margin-right: 0;
+  button {
+    width: 100%;
+  }
 }
-
-.user-row {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;       /* spacing between buttons */
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 1rem;
-  width: 100%;
-  max-width: 600px;
-}
-
-.user-row strong {
-  width: 70px;       /* reserve space for the name */
-  text-align: right;
-}
-
