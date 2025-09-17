@@ -19,7 +19,7 @@ const db = getDatabase(app);
 
 
 // ====== Users & statuses ======
-const users = ["Bonnie", "Ella", "Gaynor", "Kate", "Liv", "Sam", "Stephanie", "Yas"]; // Add your group here
+const users = ["Bonnie", "Ella", "Gaynor", "Hannah", "Kate", "Liv", "Meg", "Sam", "Stephanie", "Yas"]; // Add your group here
 const container = document.getElementById("status-container");
 const userRows = {}; // store divs by user
 
